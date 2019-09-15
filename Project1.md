@@ -1,4 +1,4 @@
-This assignment is based on a data challenge from the Michigan Data Science Team (MDST).
+This is based on a data challenge from the Michigan Data Science Team (MDST).
 
 The Michigan Data Science Team (MDST) and the Michigan Student Symposium for Interdisciplinary Statistical Sciences (MSSISS) have partnered
 with the City of Detroit to help solve one of the most pressing problems facing Detroit - blight. Blight violations are issued by the city 
