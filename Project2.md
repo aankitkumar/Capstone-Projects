@@ -57,5 +57,5 @@ The python code which returns a line graph of the record high and record low tem
 
 
 
-The Output RESULT :
+The Final RESULT :
 ![](Images/Project2.png)
