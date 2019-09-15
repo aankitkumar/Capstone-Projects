@@ -20,7 +20,7 @@ The overview of projects are as below, while further details are at beginning of
 *Analysis of renewable energy consumption in relation to energy technology research publications*
 
 - To Study of renewable energy consumption in relation to energy technology publications and anwering the related questions. This requires data frame creation, data set mearging & processing from different sources and data analysis.
-- Data analysis for renewable energy production in relation to energy research publications
+- Finding correlation between energy supply and  citable research publications per catpita
 
 ## Project 4
 
