@@ -1,4 +1,5 @@
-Hypothesis: University towns have their mean housing prices less effected by recessions. Run a t-test to compare the ratio of the mean 
+**Hypothesis:** University towns have their mean housing prices less effected by recessions. 
+Run a t-test to compare the ratio of the mean 
 price of houses in university towns the quarter before the recession starts compared to the recession bottom. 
 (price_ratio=quarter_before_recession/recession_bottom)
 
@@ -127,3 +128,49 @@ The following is done by the function below:
     Xopn.set_index(['State','RegionName'],drop=True,inplace=True)
     
     return Xopn 
+    
+    
+    The following is done by function below:
+     '''First creates new data showing the decline or growth of housing prices
+    between the recession start and the recession bottom. Then runs a ttest
+    comparing the university town values to the non-university towns values, 
+    return whether the alternative hypothesis (that the two groups are the same)
+    is true or not as well as the p-value of the confidence. 
+    
+    Return the tuple (different, p, better) where different=True if the t-test is
+    True at a p<0.01 (we reject the null hypothesis), or different=False if 
+    otherwise (we cannot reject the null hypothesis). The variable p should
+    be equal to the exact p value returned from scipy.stats.ttest_ind(). The
+    value for better should be either "university town" or "non-university town"
+    depending on which has a lower mean price ratio (which is equivilent to a
+    reduced market loss).'''
+    
+    from scipy import stats
+    def run_ttest():
+   
+    recession_bottom=get_recession_bottom()
+    recession_start=get_recession_start()
+    university_towns=get_list_of_university_towns()
+    housing_data=convert_housing_data_to_quarters().dropna()
+    ndata = housing_data.ix[:,recession_start:recession_bottom ]
+    ndata=ndata.reset_index()
+    university_towns=university_towns.reset_index().drop('index',axis=1)
+    unitowndata= ndata[ndata['RegionName'].isin(university_towns['RegionName'])] 
+    notunitowndata= ndata[~ndata['RegionName'].isin(university_towns['RegionName'])]
+    unitowndata['Ratio']= ((unitowndata[recession_start]- unitowndata[recession_bottom])/unitowndata[recession_start]).dropna()
+    notunitowndata['Ratio']= ((notunitowndata[recession_start]- notunitowndata[recession_bottom])/ notunitowndata[recession_start]).dropna()
+    print(len(unitowndata))
+    print(len(notunitowndata))
+    stat,pval=(stats.ttest_ind(unitowndata['Ratio'], notunitowndata['Ratio']))
+    if pval <0.01:
+        different = True
+        better= "university town"
+    else:
+        different = False
+        better= "non-university town"
+    return  (different,pval,better)
+
+
+The Final RESULT:
+
+(True, 0.00076409873531842394, 'university town')
