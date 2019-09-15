@@ -69,11 +69,21 @@ years (2006-2015) of GDP data and only the top 15 countries by Scimagojr 'Rank' 
     
 To find  the mean Energy Supply per Capita:
    
-   import numpy as np
-   def answer_two():
+    import numpy as np
+    def answer_two():
     Top15 = answer_one()
     return  Top15['Energy Supply per Capita'].mean()
 
+
+Write  a 1 if the country's % Renewable value is at or above the median for all countries in the top 15, and a 0 if the country's 
+% Renewable value is below the median.
+
+    def answer_ten():
+    Top15 = answer_one()
+    Top15['HighRenew'] = Top15['% Renewable'] >= Top15['% Renewable'].median()
+    return Top15['HighRenew']*1
+    
+    
 To find the  estimation of number of citable documents per person and What is the correlation between the number of citable documents
 per capita and the energy supply per capita?
 
