@@ -78,7 +78,7 @@ To find  the mean Energy Supply per Capita:
 Write  a 1 if the country's % Renewable value is at or above the median for all countries in the top 15, and a 0 if the country's 
 % Renewable value is below the median.
 
-    def answer_ten():
+    def answer_three():
     Top15 = answer_one()
     Top15['HighRenew'] = Top15['% Renewable'] >= Top15['% Renewable'].median()
     return Top15['HighRenew']*1
@@ -87,7 +87,7 @@ Write  a 1 if the country's % Renewable value is at or above the median for all 
 To find the  estimation of number of citable documents per person and What is the correlation between the number of citable documents
 per capita and the energy supply per capita?
 
-    def answer_three():
+    def answer_four():
     Top15 = answer_one()
     Top15['PopEst']= (Top15['Energy Supply'] / Top15['Energy Supply per Capita'])#
     Top15['CitationperCapita']= Top15['Citations']/Top15['PopEst']
