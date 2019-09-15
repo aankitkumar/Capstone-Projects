@@ -24,4 +24,6 @@ The overview of projects are as below, while further details are at beginning of
 
 ## Project 4
 
-Task is to prove the Hypothesis: University towns have their mean housing prices less effected by recessions and anwering the related questions. This requires data frame creation, hypothesis testing using t-tests & data analysis.
+*Hypothesis Testing*
+- Hypothesis: University towns have their mean housing prices less effected by recessions.
+- Prove hypothesis using t-tests & data analysis.
