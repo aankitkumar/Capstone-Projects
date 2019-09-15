@@ -21,10 +21,10 @@ The following data files are available for this assignment:
     
     
     
-### Use this dictionary to map state names to two letter acronyms
+#### Use this dictionary to map state names to two letter acronyms
 states = {'OH': 'Ohio', 'KY': 'Kentucky', 'AS': 'American Samoa', 'NV': 'Nevada', 'WY': 'Wyoming', 'NA': 'National', 'AL': 'Alabama', 'MD': 'Maryland', 'AK': 'Alaska', 'UT': 'Utah', 'OR': 'Oregon', 'MT': 'Montana', 'IL': 'Illinois', 'TN': 'Tennessee', 'DC': 'District of Columbia', 'VT': 'Vermont', 'ID': 'Idaho', 'AR': 'Arkansas', 'ME': 'Maine', 'WA': 'Washington', 'HI': 'Hawaii', 'WI': 'Wisconsin', 'MI': 'Michigan', 'IN': 'Indiana', 'NJ': 'New Jersey', 'AZ': 'Arizona', 'GU': 'Guam', 'MS': 'Mississippi', 'PR': 'Puerto Rico', 'NC': 'North Carolina', 'TX': 'Texas', 'SD': 'South Dakota', 'MP': 'Northern Mariana Islands', 'IA': 'Iowa', 'MO': 'Missouri', 'CT': 'Connecticut', 'WV': 'West Virginia', 'SC': 'South Carolina', 'LA': 'Louisiana', 'KS': 'Kansas', 'NY': 'New York', 'NE': 'Nebraska', 'OK': 'Oklahoma', 'FL': 'Florida', 'CA': 'California', 'CO': 'Colorado', 'PA': 'Pennsylvania', 'DE': 'Delaware', 'NM': 'New Mexico', 'RI': 'Rhode Island', 'MN': 'Minnesota', 'VI': 'Virgin Islands', 'NH': 'New Hampshire', 'MA': 'Massachusetts', 'GA': 'Georgia', 'ND': 'North Dakota', 'VA': 'Virginia'}
 
-The following cleaning needs to be done:
+The following cleaning needs to be done by function below:
 
     1. For "State", removing characters from "[" to the end.
     2. For "RegionName", when applicable, removing every character from " (" to the end.
@@ -34,7 +34,7 @@ The following cleaning needs to be done:
     DataFrame( [ ["Michigan", "Ann Arbor"], ["Michigan", "Yipsilanti"] ], 
     columns=["State", "RegionName"] 
     
-def get_list_of_university_towns():
+    def get_list_of_university_towns():
 
     df = pd.read_table('university_towns.txt',sep="\n",names=['col'])
     st=''
@@ -51,3 +51,79 @@ def get_list_of_university_towns():
     dfout['RegionName']=dfout['RegionName'].map(lambda x:x.split(' (')).str[0]
     return dfout
     
+The following is done by function below:
+'''Returns the year and quarter of the recession start time as a 
+    string value in a format such as 2005q3'''
+    
+    
+    def get_recession_start():
+    
+    df=pd.read_excel('gdplev.xls',header=None)
+    df=df[8:]
+    df.columns=['Year', 'AnnualGDPCur', 'AnnualGDPChain','dr1', 'YearQuater','QuaterGDPCur', 'QuaterGDPChain','dr2']
+    df=df.reset_index()
+    df.drop(['index','dr1','dr2'],axis=1,inplace=True)
+    df['1qdiff'] = df['QuaterGDPCur'].shift(1)
+    df['1qdiffres'] = df['QuaterGDPCur']-df['1qdiff']
+    #recession=[]
+    for i in (df.index[1:-2]):
+        if ((df['1qdiffres'].ix[i+2] < 0)& (df['1qdiffres'].ix[i+1] < 0)&(df['1qdiffres'].ix[i-1] > 0)& (df['1qdiffres'].ix[i] > 0)):
+               recessionStart=(df['YearQuater'].ix[i])#recession.append(df['YearQuater'].ix[i])
+    
+    return recessionStart
+
+
+The following is done by function below: 
+'''Returns the year and quarter of the recession bottom time as a 
+    string value in a format such as 2005q3'''
+    
+    def get_recession_bottom():
+  
+    df=pd.read_excel('gdplev.xls',header=None)
+    df=df[8:]
+    df.columns=['Year', 'AnnualGDPCur', 'AnnualGDPChain','dr1', 'YearQuater','QuaterGDPCur', 'QuaterGDPChain','dr2']
+    df=df.reset_index()
+    df.drop(['index','dr1','dr2'],axis=1,inplace=True)
+    df['1qdiff'] = df['QuaterGDPCur'].shift(1)
+    df['1qdiffres'] = df['QuaterGDPCur']-df['1qdiff']
+    recession=[]
+    rec = df[df['YearQuater']>=get_recession_start()].index#.astype('int')
+    for i in (rec[:-2]):
+        if ((df['1qdiffres'].ix[i+2] < 0)& (df['1qdiffres'].ix[i+1] < 0)):
+               recession.append(df['YearQuater'].ix[i])
+               recession.append(df['YearQuater'].ix[i+1])
+               recession.append(df['YearQuater'].ix[i+2])
+            
+    lowGDP = df['YearQuater'][df['QuaterGDPCur'].where(df['YearQuater'].isin(recession)).idxmin()]
+    return lowGDP
+    
+    
+The following is done by the function below:
+'''Converts the housing data to quarters and returns it as mean 
+    values in a dataframe. This dataframe should be a dataframe with
+    columns for 2000q1 through 2016q3, and should have a multi-index
+    in the shape of ["State","RegionName"].
+    '''
+    
+    import time as tm
+    import datetime  as dt
+    def convert_housing_data_to_quarters():
+    data = pd.read_csv('City_Zhvi_AllHomes.csv')
+    lst=['RegionID', 'RegionName', 'State', 'Metro', 'CountyName', 'SizeRank','1996-04', '1996-05', '1996-06', '1996-07','1996-08',          '1996-09', '1996-10', '1996-11', '1996-12', '1997-01', '1997-02', '1997-03', '1997-04', '1997-05', '1997-06', '1997-07','1997-08',      '1997-09', '1997-10', '1997-11','1997-12', '1998-01', '1998-02', '1998-03','1998-04', '1998-05', '1998-06', '1998-07','1998-08',         '1998-09', '1998-10', '1998-11','1998-12', '1999-01', '1999-02', '1999-03','1999-04', '1999-05', '1999-06', '1999-07','1999-08',         '1999-09', '1999-10', '1999-11','1999-12']
+    opn= data.drop(lst,axis=1)
+ 
+    Xopn=pd.DataFrame(data[['State', 'RegionName']])
+    for year in range(2000,2016):
+        Xopn[str(year)+'q1'] = opn[[str(year)+'-01',str(year)+'-02',str(year)+'-03']].mean(axis=1)
+        Xopn[str(year)+'q2'] = opn[[str(year)+'-04',str(year)+'-05',str(year)+'-06']].mean(axis=1)
+        Xopn[str(year)+'q3'] = opn[[str(year)+'-07',str(year)+'-08',str(year)+'-09']].mean(axis=1)
+        Xopn[str(year)+'q4'] = opn[[str(year)+'-10',str(year)+'-11',str(year)+'-12']].mean(axis=1)
+    year = 2016    
+    Xopn[str(year)+'q1'] = opn[[str(year)+'-01',str(year)+'-02',str(year)+'-03']].mean(axis=1)
+    Xopn[str(year)+'q2'] = opn[[str(year)+'-04',str(year)+'-05',str(year)+'-06']].mean(axis=1)
+    Xopn[str(year)+'q3'] = opn[[str(year)+'-07',str(year)+'-08']].mean(axis=1)
+    
+    Xopn.replace({"State": states},inplace=True)
+    Xopn.set_index(['State','RegionName'],drop=True,inplace=True)
+    
+    return Xopn 
