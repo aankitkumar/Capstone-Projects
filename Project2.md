@@ -3,18 +3,13 @@ Climatology Network (GHCN-Daily). The GHCN-Daily is comprised of daily climate r
 
 The python code which returns a line graph of the record high and record low temperatures by day of the year over the period 2005-2014. The area between the record high and record low temperatures for each day is be shaded. Using scatter plot to overlay of the 2015 data for any points (highs and lows) for which the ten year record (2005-2014) record high or record low was broken in 2015.
 
-The Output RESULT :
-![Res](Images/Project2.png)
 
+    %matplotlib notebook
+    import matplotlib.pyplot as plt
+    import numpy as np
+    import pandas as pd
 
-The code :
-
-%matplotlib notebook
-import matplotlib.pyplot as plt
-import numpy as np
-import pandas as pd
-
-def plot_temprature():
+    def plot_temprature():
 
     df = pd.read_csv('data/C2A2_data/BinnedCsvs_d400.csv')
     df['Data_Value']=df['Data_Value'].apply(lambda x:x/10)
@@ -62,4 +57,5 @@ def plot_temprature():
 
 
 
-
+The Output RESULT :
+![](Images/Project2.png)
