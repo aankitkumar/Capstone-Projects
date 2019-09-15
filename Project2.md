@@ -14,9 +14,9 @@ import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
 
-def plot_temprature(binsize):
+def plot_temprature():
 
-    df = pd.read_csv('data/C2A2_data/BinnedCsvs_d{}.csv'.format(binsize))
+    df = pd.read_csv('data/C2A2_data/BinnedCsvs_d400.csv')
     df['Data_Value']=df['Data_Value'].apply(lambda x:x/10)
     
     df['Date']= pd.to_datetime(df['Date'])
