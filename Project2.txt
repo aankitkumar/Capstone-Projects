@@ -56,3 +56,7 @@ def plot_temprature(binsize):
     ax.yaxis.set_tick_params(labelsize=15)
     
     return plt.show()
+
+
+
+#The RESULT :
