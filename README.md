@@ -2,7 +2,7 @@
 
 This repository contains my capstone project, done for understanding & using data analysis, visualization and machine learning techniques. The asssignments are completed using Python, Numpy, DateTime, Pandas, Matplotlib and scikit-learn with Jupyter notebooks.
 
-The overview of projects are as below, while further details are at beginning of each assignment: 
+The overview of projects are as below, while further details are at beginning of each project .md file: 
 
 ## Project 1
 *Understanding and predicting property maintenance fines*
