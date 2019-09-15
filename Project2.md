@@ -60,3 +60,4 @@ def plot_temprature(binsize):
 
 
 #The RESULT :
+[[Images/Project2.png]]
